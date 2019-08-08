@@ -1,5 +1,28 @@
 <?php
 
+if ( !array_key_exists( 'HTTP_X_TOKEN', $_SERVER ) ) {
+
+	die;
+}
+
+$url = 'http://localhost:8001';
+$ch = curl_init($url);
+
+
+curl_setopt( 
+    $ch, 
+    CURLOPT_HTTPHEADER, 
+    [
+        "X-Token: {$_SERVER['HTTP_X_TOKEN']}"
+    ]
+    );
+curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+$ret = curl_exec( $ch );
+
+if ( $ret !== 'true' ) {
+	die;
+}
+
 // $user = array_key_exists('PHP_AUTH_USER', $_SERVER) ? $_SERVER['$_PHP_AUTH_USER'] : '';
 // $pwd = array_key_exists('PHP_AUTH_PW', $_SERVER) ? $_SERVER['$_PHP_AUTH_PW'] : '';
 
@@ -7,26 +30,26 @@
 //     die;
 // }
 
-if(
-    !array_key_exists('HTTP_X_HASH', $_SERVER) ||
-    !array_key_exists('HTTP_X_TIMESTAMP', $_SERVER) ||
-    !array_key_exists('HTTP_X_UID', $_SERVER)
-){
-    die;
-}
+// if(
+//     !array_key_exists('HTTP_X_HASH', $_SERVER) ||
+//     !array_key_exists('HTTP_X_TIMESTAMP', $_SERVER) ||
+//     !array_key_exists('HTTP_X_UID', $_SERVER)
+// ){
+//     die;
+// }
 
-list($hash, $uid, $timestamp) = [
-    $_SERVER['HTTP_X_HASH'],
-    $_SERVER['HTTP_X_UID'],
-    $_SERVER['HTTP_X_TIMESTAMP'],
-];
+// list($hash, $uid, $timestamp) = [
+//     $_SERVER['HTTP_X_HASH'],
+//     $_SERVER['HTTP_X_UID'],
+//     $_SERVER['HTTP_X_TIMESTAMP'],
+// ];
 
-$secret = 'Sh!! No se lo cuentes a nadie!';
-$newHash = sha1($uid.$timestamp.$secret);
+// $secret = 'Sh!! No se lo cuentes a nadie!';
+// $newHash = sha1($uid.$timestamp.$secret);
 
-if($newHash !== $hash){
-    die;
-}
+// if($newHash !== $hash){
+//     die;
+// }
 
 $allowedResourceTypes = [
     'books',
