@@ -1,5 +1,12 @@
 <?php
 
+$user = array_key_exists('PHP_AUTH_USER', $_SERVER) ? $_SERVER['$_PHP_AUTH_USER'] : '';
+$pwd = array_key_exists('PHP_AUTH_PW', $_SERVER) ? $_SERVER['$_PHP_AUTH_PW'] : '';
+
+if($user!== 'mauro' || $pwd !== '1234'){
+    die;
+}
+
 $allowedResourceTypes = [
     'books',
     'authors',
