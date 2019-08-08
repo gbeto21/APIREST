@@ -1,7 +1,7 @@
 <?php
 
 if ( !array_key_exists( 'HTTP_X_TOKEN', $_SERVER ) ) {
-
+    http_response_code(400);
 	die;
 }
 
@@ -98,6 +98,9 @@ switch (strtoupper ($_SERVER['REQUEST_METHOD']) ){
         else{
             if(array_key_exists($resourceId, $books)){
                 echo json_encode($books[$resourceId]);
+            }
+            else{
+                http_response_code(404);
             }
         }
 
